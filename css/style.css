@@ -55,17 +55,17 @@ footer .social>a:hover  {
 .fa-li{
     color:#ff993b;
 }
-.fizz{
+.Fizz{
     color:rgb(7, 91, 201);
     font-weight: bolder;
 }
 
-.buzz{
+.Buzz{
     color: red;
     font-weight: bolder;
 }
 
-.fizzBuzz{
+.FizzBuzz{
     color:blueviolet;
     font-weight: bolder;
 }

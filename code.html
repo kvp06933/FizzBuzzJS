@@ -46,7 +46,7 @@
         </nav>
         <!--Main Section-->
         <main class="flex-shrink-0" id="content">
-            <div class="container">
+            <div class="container mt-5">
                 <h1>The Code</h1>
                 <hr>
                 <div class="row">
@@ -54,32 +54,87 @@
                         <pre class="line-numbers">
                             <code class="language-javascript">
                                 //display a message to the user
+                                function getValues(){
+                                    //declare the required variables
+                                    let startValue = 0;
+                                    let endValue = 100;
+                                    //get the numbers from the UI
+                                    startValue=document.getElementById("startValue").value;
+                                    endValue=document.getElementById("endValue").value;
+                                    //Validate our numbers
+                                    startValue = parseInt(startValue);
+                                    endValue = parseInt(endValue);
 
-                                function displayMessage(){
-                                    //declare variable
-                                    let msg = "";
-                                    //pull the value from the input box
-                                    msg = document.getElementById("message").value;
-                                    
-                                    alert(msg);
-                                }
-                                function displayMessage2(){
-                                    let msg = "";
-                                    msg = document.getElementById("message").value;
-                                    Swal.fire(msg);
+                                    //check to see both values are numbers
+                                    if(Number.isInteger(startValue) && Number.isInteger(endValue)){
+                                        //both numbers are integers
+
+                                        //
+                                    let numbers = generateNumbers(startValue, endValue);
+                                    displayNumbers(numbers);
+                                    }else{
+                                        //one or more are not
+                                        Swal.fire("Please enter only integers 1, 2, 3, etc. NOT 1.5, 2/3, Cat");
+                                    }
                                 
+                                
+                                }
+                                //generate numbers from startValue to endValue
+                                function generateNumbers(sValue, eValue){
+                                    //0,1,2,3, etc
+                                    let numbers = [];
+                                    //Loop over the numbers until we hit the end value
+                                    for (let index = sValue; index &lt;= eValue; index++) {
+
+                                        //Add numbers to array
+                                        numbers.push(index);
+                                        
+                                    }
+                                    return numbers;
+                                }
+                                //displays the numbers
+                                function displayNumbers(numbers){
+                                    //0 first index value
+                                    //99 last index value
+                                    //length = 100
+                                    
+                                    let endIndex = numbers.length;
+                                    let tableBody = document.getElementById("results");
+                                    //Clear out previous results
+                                    tableBody.innerHTML = "";
+                                    for (let index = 0; index &lt; endIndex; index++) {
+                                        let tableRow = "";
+                                        //get the actual number
+                                        let number = numbers[index];
+
+                                        if(number % 2 == 0){
+                                            //the number is even
+                                            tableRow = `&lt;tr>&lt;td class="evenDisplay">${number}&lt;/td>&lt;/tr>`
+                                        } else{
+                                            //the number is odd
+                                            tableRow = `&lt;tr>&lt;td>${number}&lt;/td>&lt;/tr>`
+                                        }
+
+                                        
+                                        tableBody.innerHTML += tableRow;
+                                        
+                                    }
                                 }
                             </code>
                         </pre>
                        
                     </div>
                     <div class="col-12 col-lg-4">
-                        <p>The Code is structured in one function</p>
-                        <h5>DisplayMessage</h5>
-                        <p>Prints out Hello App!</p>
+                        <p>The Code is structured in three functions</p>
+                        <h5>GetValues</h5>
+                        <p>GetValues is the controller function. It pulls the user numbers from the UI and converts them to integers, if able. If the values cannot be parsed, an alert pops up to make sure only integer values are entered.</p>
+                        <p>If both values entered are integers, the functions generateNumbers and displayBeji are run.</p>
                         
-                        <h5>DisplayMessage2</h5>
-                        <p>Shows SweetAlert message</p>
+                        <h5>GenerateNumbers</h5>
+                        <p>GenerateNumbers is the logic function. It takes in the user values as start and end values. It initializes an empty array into a numbers variable.</p><p>A for loop runs that pushes each index value into the numbers array.</p><P>generateNumbers returns the numbers array.</P>
+
+                        <h5>DisplayBenji</h5>
+                        <The>DisplayBenji is the display function. It takes in the numbers array. It initializes a tableBody variable that stores the information in the tbody tag. The tableBody innerHTML is set as an empty string to clear the previous result.</p><p>A for loop looping through the numbers array initializes a number variable that stores the value of each numbers array element. It checks if the current element is even using an if-else statement.</p><p>If the value, evaluted using a modulus, is even, an evenDisplay class is added bolding and coloring the value printed. If the value is odd no class is added. At the end of the loop, a new tableRow is appended to the tableBody.</p>
                     </div>
                 </div>
             </div>
