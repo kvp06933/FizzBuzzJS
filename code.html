@@ -19,7 +19,7 @@
         <!--Nav Section-->
         <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
             <div class="container-fluid">
-              <a class="navbar-brand" href="#"><img src="/img/mark-white.svg" width="30"> APP Name</a>
+              <a class="navbar-brand" href="#"><img src="/img/mark-white.svg" width="30">FizzBuzz</a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
@@ -55,69 +55,81 @@
                             <code class="language-javascript">
                                 //display a message to the user
                                 function getValues(){
-                                    //declare the required variables
-                                    let startValue = 0;
-                                    let endValue = 100;
-                                    //get the numbers from the UI
-                                    startValue=document.getElementById("startValue").value;
-                                    endValue=document.getElementById("endValue").value;
-                                    //Validate our numbers
+                                    let startValue = 3;
+                                    let endValue = 5;
+                                    //get values from user
+                                    startValue = document.getElementById("startValue").value;
+                                    endValue = document.getElementById("endValue").value;
+                                    //Convert string inputs to integers if able
                                     startValue = parseInt(startValue);
                                     endValue = parseInt(endValue);
-
-                                    //check to see both values are numbers
+                                    // checkInputs(startValue, endValue); ************ This is an error
                                     if(Number.isInteger(startValue) && Number.isInteger(endValue)){
-                                        //both numbers are integers
-
-                                        //
-                                    let numbers = generateNumbers(startValue, endValue);
-                                    displayNumbers(numbers);
-                                    }else{
-                                        //one or more are not
-                                        Swal.fire("Please enter only integers 1, 2, 3, etc. NOT 1.5, 2/3, Cat");
+                                        //generate Numbers Array
+                                        let numbers = generateNumbers(startValue, endValue);
+                                        //generate Table
+                                        displayTable(numbers);
+                                    } else{
+                                        Swal.fire("Please enter only integers between 1 and 100 (1 , 2, 3 ...)");
                                     }
                                 
-                                
                                 }
+
                                 //generate numbers from startValue to endValue
                                 function generateNumbers(sValue, eValue){
                                     //0,1,2,3, etc
                                     let numbers = [];
                                     //Loop over the numbers until we hit the end value
-                                    for (let index = sValue; index &lt;= eValue; index++) {
-
+                                    for (let step = 1; step &lt;= 100; step++) {
                                         //Add numbers to array
-                                        numbers.push(index);
+                                        if(step % sValue == 0 && step % eValue ==0){
+                                            numbers.push("FizzBuzz");
+                                        } else if(step % sValue == 0){
+                                            numbers.push("Fizz");
+                                        } else if(step % eValue == 0){
+                                            numbers.push("Buzz");
+                                        } else {
+                                            numbers.push(step);
+                                        }
                                         
                                     }
                                     return numbers;
                                 }
-                                //displays the numbers
-                                function displayNumbers(numbers){
-                                    //0 first index value
-                                    //99 last index value
-                                    //length = 100
+
+                                function displayTable(numArr){
+                                    //Generate table of values
                                     
-                                    let endIndex = numbers.length;
                                     let tableBody = document.getElementById("results");
-                                    //Clear out previous results
+
+                                    //get the template to make the table
+                                    let rowTemplate = document.getElementById("fbTemplate");
+
+                                    //clear tablebody results
+
                                     tableBody.innerHTML = "";
-                                    for (let index = 0; index &lt; endIndex; index++) {
-                                        let tableRow = "";
-                                        //get the actual number
-                                        let number = numbers[index];
 
-                                        if(number % 2 == 0){
-                                            //the number is even
-                                            tableRow = `&lt;tr>&lt;td class="evenDisplay">${number}&lt;/td>&lt;/tr>`
-                                        } else{
-                                            //the number is odd
-                                            tableRow = `&lt;tr>&lt;td>${number}&lt;/td>&lt;/tr>`
-                                        }
+                                    for(let i = 0; i &lt;numArr.length; i+=5){
+                                        const tableRow = document.importNode(rowTemplate.content, true);
 
+                                        let rowCols = tableRow.querySelectorAll("td");
+                                        //This is one table cd &lt;td> the first line adds a class for CSS, the second line adds the text
+                                        rowCols[0].classList.add(numArr[i]);
+                                        rowCols[0].textContent = numArr[i];
                                         
-                                        tableBody.innerHTML += tableRow;
-                                        
+                                        rowCols[1].classList.add(numArr[i+1]);
+                                        rowCols[1].textContent = numArr[i+1];
+
+                                        rowCols[2].classList.add(numArr[i+2]);
+                                        rowCols[2].textContent = numArr[i+2];
+
+                                        rowCols[3].classList.add(numArr[i+3]);
+                                        rowCols[3].textContent = numArr[i+3];
+
+                                        rowCols[4].classList.add(numArr[i+4]);
+                                        rowCols[4].textContent = numArr[i+4];
+
+                                        tableBody.appendChild(tableRow);
+
                                     }
                                 }
                             </code>
@@ -127,33 +139,34 @@
                     <div class="col-12 col-lg-4">
                         <p>The Code is structured in three functions</p>
                         <h5>GetValues</h5>
-                        <p>GetValues is the controller function. It pulls the user numbers from the UI and converts them to integers, if able. If the values cannot be parsed, an alert pops up to make sure only integer values are entered.</p>
-                        <p>If both values entered are integers, the functions generateNumbers and displayBeji are run.</p>
+                        <p>GetValues is the controller function. It pulls the user given values from the UI and converts them to integers, if able. If the values cannot be parsed, an alert pops up to make sure only integer values are entered.</p>
+                        <p>If both values entered are integers, the functions generateNumbers and displayTable are run.</p>
                         
                         <h5>GenerateNumbers</h5>
-                        <p>GenerateNumbers is the logic function. It takes in the user values as start and end values. It initializes an empty array into a numbers variable.</p><p>A for loop runs that pushes each index value into the numbers array.</p><P>generateNumbers returns the numbers array.</P>
+                        <p>GenerateNumbers is the logic function. It initiates an empty array called "numbers", and uses an if else loop that runs from 0 to 100. It takes in the user values as "Fizz" and "Buzz" values.</p><p>The loop checks if each index value is divisible by both the "Fizz" and "Buzz" values, or only the "Fizz" or "Buzz" value. If the value matches one of these conditions, "FizzBuzz", "Fizz", and "Buzz", respectively, is pushed to the array. If the index value isn't divisible by any of these conditions, the index value is pushed to the array.</p><P>generateNumbers returns the numbers array.</P>
 
-                        <h5>DisplayBenji</h5>
-                        <The>DisplayBenji is the display function. It takes in the numbers array. It initializes a tableBody variable that stores the information in the tbody tag. The tableBody innerHTML is set as an empty string to clear the previous result.</p><p>A for loop looping through the numbers array initializes a number variable that stores the value of each numbers array element. It checks if the current element is even using an if-else statement.</p><p>If the value, evaluted using a modulus, is even, an evenDisplay class is added bolding and coloring the value printed. If the value is odd no class is added. At the end of the loop, a new tableRow is appended to the tableBody.</p>
+                        <h5>DisplayTable</h5>
+                        <p>DisplayTable is the display function. It takes in the numbers array. It initializes a tableBody variable that stores the information in the tbody tag. The tableBody innerHTML is set as an empty string to clear the previous result.</p><p>A for loop looping through the numbers array initializes a number variable that stores the value of each numbers array element. It add a.</p><p>If the value, evaluted using a modulus, is even, an evenDisplay class is added bolding and coloring the value printed. If the value is odd no class is added. At the end of the loop, a new tableRow is appended to the tableBody.</p>
                     </div>
                 </div>
             </div>
         </main>
         <!--Footer Section-->
-        <footer class="footer sticky-footer mt-auto p-3">
+        <footer class="footer mt-auto p-3">
             <div class="container-fluid">
                 <div class="row row-cols-1 row-cols-lg-3 gy-2">
                     <div class="col order-last order-lg-first d-flex align-items-center">
-                        <div class="text-light"><span class="text-muted">&copy2021</span> Katherine Pitts | katherinevpitts@gmail.com</div>
+                        <div class="text-light"><span class="text-muted">&copy2021</span> Katherine Pitts |
+                            katherinevpitts@gmail.com</div>
                     </div>
                     <div class="col d-flex align-items-center justify-content-start justify-content-lg-center">
-                        <img src="/img/kpitts-logo-light.svg" height="24"alt="">
+                        <a href="http://www.katherinepitts.com" target="_blank"><img src="/img/kp-logo-light.svg" height="30" alt="Katherine Pitts portfolio link"></a>
                     </div>
                     <div class="col d-flex align-items-center justify-content-start justify-content-lg-center">
                         <div class="row">
-                            <div class="col social"><a href="#"><i class="fab fa-linkedin fa-2x"></i></a></div>
-                            <div class="col social"><a href="#"><i class="fab fa-twitter fa-2x"></i></a></div>
-                            <div class="col social"><a href="#"><i class="fab fa-github fa-2x"></i></a></div>
+                            <div class="col social"><a href="https://www.linkedin.com/in/katherine-pitts/" target="_blank"><i class="fab fa-linkedin fa-2x"></i></a></div>
+                            <div class="col social"><a href="https://twitter.com/katydevcodes" target="_blank"><i class="fab fa-twitter fa-2x"></i></a></div>
+                            <div class="col social"><a href="https://github.com/kvp06933" target="_blank"><i class="fab fa-github fa-2x"></i></a></div>
                         </div>
                     </div>
                 </div>

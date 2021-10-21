@@ -1,11 +1,14 @@
 :root{
     --primary-color: #001e43;
-    --secondary-color:#ff993b;
-    --dark-color:#300000;
+    --secondary-color:#cc379b;
+    --dark-color:#06062b;
     --white-color: #dfe3e4;
 }
 body{
     color: var(--dark-color);
+}
+h2,h3,h4,h5,h6{
+    color: var(--secondary-color);
 }
 main>.container {
     padding: 60px 15px 0;
@@ -53,7 +56,7 @@ footer .social>a:hover  {
     color: rgb(9, 112, 247);
 }
 .fa-li{
-    color:#ff993b;
+    color:var(--secondary-color);
 }
 .Fizz{
     color:rgb(7, 91, 201);
